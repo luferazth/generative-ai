@@ -43,16 +43,16 @@ open http://localhost:5000
   - OpenSearch Serverless (create/delete collections)
 
 ### AWS Bedrock Model Access
-**CRITICAL**: Request model access in AWS Console before deployment:
+**Model access is now enabled by default!** As per [AWS Bedrock Model Access Documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html), foundation models are automatically available in your AWS account without requiring manual access requests.
 
-1. Go to AWS Console → Bedrock → Model access
-2. Request access to these **on-demand** models:
-   - ✅ Claude 3 Sonnet (`anthropic.claude-3-sonnet-20240229-v1:0`)
-   - ✅ Claude 3 Haiku (`anthropic.claude-3-haiku-20240307-v1:0`)
-   - ✅ Titan Embed Text v2 (`amazon.titan-embed-text-v2:0`)
-3. Wait for approval (usually instant for on-demand models)
+The models used in this project are:
+- ✅ Claude 3 Sonnet (`anthropic.claude-3-sonnet-20240229-v1:0`)
+- ✅ Claude 3 Haiku (`anthropic.claude-3-haiku-20240307-v1:0`)
+- ✅ Titan Embed Text v2 (`amazon.titan-embed-text-v2:0`)
+- ✅ GPT-OSS models
+- ✅ Mistral models
 
-**Verify access**:
+**Verify available models** (optional):
 ```bash
 aws bedrock list-foundation-models --region eu-west-1 \
   --query 'modelSummaries[?modelLifecycle.status==`ACTIVE`].[modelId,modelName]' \
@@ -320,24 +320,20 @@ All scripts are in the `scripts/` folder:
 
 ## Issues Encountered & Solutions
 
-### Issue 1: Model Access - On-Demand vs Provisioned Throughput
+### Issue 1: Model Access - Now Enabled by Default
 
-**Problem**: Not all Bedrock models are available by default. Some require "Provisioned Throughput" with explicit access requests and commitments.
+**Update**: As per [AWS documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html), foundation model access is now **enabled by default** in AWS Bedrock. No manual access requests are required!
 
-**Models Available On-Demand** (No special access needed):
+**Models Available** (automatically accessible):
 - ✅ Claude 3 Sonnet (`anthropic.claude-3-sonnet-20240229-v1:0`)
 - ✅ Claude 3 Haiku (`anthropic.claude-3-haiku-20240307-v1:0`)
 - ✅ GPT-OSS 120B (`openai.gpt-oss-120b-1:0`)
 - ✅ GPT-OSS 20B (`openai.gpt-oss-20b-1:0`)
 - ✅ Mistral Large (`mistral.mistral-large-2402-v1:0`)
 - ✅ Mixtral 8x7B (`mistral.mixtral-8x7b-instruct-v0:1`)
+- ✅ Titan Embed Text v2 (`amazon.titan-embed-text-v2:0`)
 
-**Models Requiring Provisioned Throughput**:
-- Claude 3.5 Sonnet v2, Claude 3.5 Haiku, Amazon Nova models
-
-**Solution**: Use on-demand models for POC/testing.
-
-**Check Model Access**:
+**Verify Available Models**:
 ```bash
 aws bedrock list-foundation-models --region eu-west-1 \
   --query 'modelSummaries[?modelLifecycle.status==`ACTIVE`].[modelId,modelName]' \
