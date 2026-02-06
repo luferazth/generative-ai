@@ -740,9 +740,3 @@ All scripts are in the `scripts/` folder:
 - **setup_knowledge_base.py** - Programmatic KB setup
 - **setup_knowledge_base_manual.py** - Manual KB setup
 
----
-
-**Status**: ✅ Production-ready POC  
-**Region**: eu-west-1  
-**Deployment Time**: ~15 minutes  
-**Cost**: Pay-as-you-go (~$5-10/day)
